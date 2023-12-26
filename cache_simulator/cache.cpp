@@ -327,10 +327,6 @@ icache_access(uint32_t addr)
         
     }
     
-    for (int i=adr_index*icacheAssoc;i<icacheAssoc+adr_index*icacheAssoc;i++)
-    {
-        //printf("end %d %u  %u  %u \n",i,icache_valid[i], icache_tag[i], icache_lru[i]);
-    }
     
     
   
@@ -382,7 +378,6 @@ dcache_access(uint32_t addr)
         }
     }
     
-    //printf("c_HIT = %d \n",c_hit);
     uint32_t ac_time=0;
     if (c_hit == 1)
     {
@@ -438,10 +433,7 @@ dcache_access(uint32_t addr)
         
     }
     
-    for (int i=adr_index*dcacheAssoc;i<dcacheAssoc+adr_index*dcacheAssoc;i++)
-    {
-        //printf("end %d %u  %u  %u \n",i,dcache_valid[i], dcache_tag[i], dcache_lru[i]);
-    }
+    
     
   return dcacheHitTime + ac_time;
 }
@@ -475,10 +467,7 @@ l2cache_access(uint32_t addr, int cache_type)
     
     
     
-    for (int i=adr_index*l2cacheAssoc;i<l2cacheAssoc+adr_index*l2cacheAssoc;i++)
-    {
-        //printf("start %d  %u  %u  %u \n",i,l2cache_valid[i], l2cache_tag[i], l2cache_lru[i]);
-    }
+   
     
     for (int i=adr_index*l2cacheAssoc;i<l2cacheAssoc+adr_index*l2cacheAssoc;i++)
     {
@@ -493,7 +482,7 @@ l2cache_access(uint32_t addr, int cache_type)
         }
     }
     
-    //printf("c_HIT = %d \n",c_hit);
+    
     uint32_t ac_time = 0;
     if (c_hit == 1)
     {
@@ -565,10 +554,7 @@ l2cache_access(uint32_t addr, int cache_type)
         
     }
     
-    for (int i=adr_index*l2cacheAssoc;i<l2cacheAssoc+adr_index*l2cacheAssoc;i++)
-    {
-        //printf("end %d %u  %u  %u \n",i,l2cache_valid[i], l2cache_tag[i], l2cache_lru[i]);
-    }
+    
 
     return ac_time + l2cacheHitTime;
  
@@ -736,7 +722,6 @@ icache_prefetch(uint32_t addr)
     adr_offset = addr & (icacheBlocksize - 1);
     uint32_t adr_index = (addr >> icache_block_offset) & ((1 << icache_index_bits) - 1);
     uint32_t adr_tag = (addr >> (icache_block_offset + icache_index_bits)) & ((1 << icache_tag_bits) - 1);
-    //printf("start %u  %u  %u  %u  %u\n",addr, adr_offset, adr_index, adr_tag, icache_lines );
     int c_hit = 0;
     int hit_index;
     int hit_index_lru;
@@ -900,9 +885,5 @@ dcache_prefetch(uint32_t addr)
         
     }
     
-    for (int i=adr_index*dcacheAssoc;i<dcacheAssoc+adr_index*dcacheAssoc;i++)
-    {
-        //printf("end %d %u  %u  %u \n",i,dcache_valid[i], dcache_tag[i], dcache_lru[i]);
-    }
     
 }
